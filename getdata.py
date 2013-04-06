@@ -56,9 +56,9 @@ def ave(*n):
         return sum(l) / len(l)
 
 
-def genRichList2012():
+def genRichList():
     data = {}
-    for fn in ["./data/Town-Hall-Rich-List-2012/1.tsv", ]:
+    for fn in ["./data/TPA/Town-Hall-Rich-List-2012/1.tsv", ]:
         for line in csv.reader(file(fn), delimiter="\t"):
             try:
                 region, council, name, job, d2009, d2010 = line[0:6]
@@ -84,15 +84,43 @@ def genRichList2012():
     return data.values()
 
 
+def genRoadSalt():
+    data = {}
+    for fn in ["./data/TPA/Road-Salt-by-council-2009-11/1.tsv", ]:
+        for line in csv.reader(file(fn), delimiter="\t"):
+            try:
+                council, ordered_tonnes_2009 = line[0:2]
+                point = getCenter(council)
+                d2009 = tryInt(ordered_tonnes_2009)
+                da = ave(d2009)
+                if da and point:
+                    if council in data:
+                        data[council]["val"].append(da)
+                    else:
+                        data[council] = {
+                            "lat": point[0],
+                            "lon": point[1],
+                            "val": [da, ]
+                        }
+            except Exception as e:
+                print e
+
+    for council in data:
+        data[council]["val"] = ave(*data[council]["val"])
+
+    return data.values()
+
+
 def dict2jsonp(name, dataFunc):
     fn = "layers/%s.js" % name
     if not os.path.exists(fn):
         print "Generating", fn
         data = dataFunc()
-        file(fn, "w").write("addLayer(\n'%s',\n%s\n);" % (name, json.dumps(data, indent=4)))
+        file(fn, "w").write("addLayer('%s', %s);" % (name, json.dumps(data, indent=4)))
     else:
         print "Already generated", fn
 
 
-dict2jsonp("rich-list-2012", genRichList2012)
+dict2jsonp("rich-list", genRichList)
+dict2jsonp("road-salt", genRoadSalt)
 

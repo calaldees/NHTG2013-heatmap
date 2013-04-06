@@ -1,6 +1,4 @@
-addLayer(
-'rich-list-2012',
-[
+addLayer('rich-list', [
     {
         "lat": 51.1562997, 
         "lon": 0.8669753, 
@@ -1966,5 +1964,4 @@ addLayer(
         "lon": -1.7854949, 
         "val": 133048
     }
-]
-);
+]);
