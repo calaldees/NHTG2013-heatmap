@@ -24,7 +24,8 @@
         <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=visualization&sensor=false"></script>
         
         <script type="text/javascript">
-            var locationNesta = new google.maps.LatLng(51.51690840261987, -0.10921955108642578);
+            var mapStartLocationDefault = new google.maps.LatLng(52.70435019930582, -1.25244140625);
+            var mapStartLocationNesta   = new google.maps.LatLng(51.51690840261987, -0.10921955108642578);
             
             var layers = {};
             var map;
@@ -32,16 +33,16 @@
             function initialize() {
                 // Setup Map base options
                 var mapOptions = {
-                    center: locationNesta,
-                    zoom: 7,
+                    center: mapStartLocationDefault,
+                    zoom: 6,
                     mapTypeId: google.maps.MapTypeId.ROADMAP
                 };
                 // Link Map to DOM
                 map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
                 
-                //google.maps.event.addListener(map, 'click', function(event) {
-                //    placeMarker(event.latLng);
-                //});
+                google.maps.event.addListener(map, 'click', function(event) {
+                    placeMarker(event.latLng);
+                });
                 
                 refreshSelector();
                 setHeatmap(document.getElementById("dataset_selector").value);
@@ -67,7 +68,7 @@
                 // Convert layer_data elements in the form {lat:xx, lon:xx, val:xx} into google map points
                 google_layer_data = [];
                 _.each(layer_data, function(element,index,list) {
-                    google_layer_data.push(new google.maps.LatLng(element.lat, element.lon));
+                    google_layer_data.push({location: new google.maps.LatLng(element.lat, element.lon), weight: element.val});
                 });
                 
                 // Add processed layer data to layers list
