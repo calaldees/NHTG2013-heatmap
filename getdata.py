@@ -54,7 +54,7 @@ def tryInt(n):
 
 
 def ave(*n):
-    l = [x for x in n if x]
+    l = [x for x in n if x is not None]
     if l:
         return sum(l) / len(l)
 
@@ -65,7 +65,7 @@ def generic(filepat, parse):
         for line in csv.reader(file(fn), delimiter="\t"):
             try:
                 point, value = parse(line)
-                if point and value:
+                if point is not None and value is not None:
                     if point in data:
                         data[point]["val"].append(value)
                     else:
@@ -106,13 +106,22 @@ def parseRichList(line):
 dict2jsonp("rich-list", "./data/TPA/Town-Hall-Rich-List-2012/1.tsv", parseRichList)
 
 
-def parseRoadSalt(line):
+def parseRoadSaltTonnes(line):
     council, ordered_tonnes_2009 = line[0:2]
     point = getCenter(council)
     value = tryInt(ordered_tonnes_2009)
     return point, value
 
-dict2jsonp("road-salt", "./data/TPA/Road-Salt-by-council-2009-11/1.tsv", parseRoadSalt)
+dict2jsonp("road-salt-tonnes", "./data/TPA/Road-Salt-by-council-2009-11/1.tsv", parseRoadSaltTonnes)
+
+
+def parseRoadSaltCost(line):
+    council, t09, s09, t10, s10, when, rec, cost = line[0:8]
+    point = getCenter(council)
+    value = tryInt(cost)
+    return point, value
+
+dict2jsonp("road-salt-emergency-cost", "./data/TPA/Road-Salt-by-council-2009-11/1.tsv", parseRoadSaltCost)
 
 
 def parseAwards(line):
@@ -123,3 +132,32 @@ def parseAwards(line):
 
 dict2jsonp("awards", "./data/TPA/Award-Ceremony-Data-2010-2011/1.tsv", parseAwards)
 
+
+def parseMileageRate(line):
+    council, rate, _hmrc, amount = line[0:4]
+    point = getCenter(council)
+    value = tryInt(rate)
+    return point, value
+
+dict2jsonp("mileage-rate", "data/TPA/Mileage-Allowances-FINAL-2008-11/1.tsv", parseMileageRate)
+
+
+def parseMileageAmount(line):
+    council, rate, _hmrc, amount = line[0:4]
+    point = getCenter(council)
+    value = tryInt(amount)
+    return point, value
+
+dict2jsonp("mileage-amount", "data/TPA/Mileage-Allowances-FINAL-2008-11/1.tsv", parseMileageAmount)
+
+#data/TPA/Council-Pension-Deficit-ALL-07-08-and-08-09/1.tsv
+#data/TPA/Council-Pension-Deficit-London-07-08-and-08-09/1.tsv
+#data/TPA/Council-Spending-Pension-Payments-09-11/1.tsv
+#data/TPA/Council-tax-over-last-10-years---England,-Wales-&-Scotland-Band-D/1.tsv
+#data/TPA/Empty-Property-Rates---final-data/1.tsv
+#data/TPA/Housing-Associations-Head-Pay-2009-11/1.tsv
+#data/TPA/Local-Council-employees---number-paying-in-vs-drawing-2006-11/1.tsv
+#data/TPA/Local-Councils-Middle-Management-pay-data-12.2.13/1.tsv
+#data/TPA/Local-Govt-Exec-Pay-06-08/1.tsv
+#data/TPA/Number-of-Bins-and-Fines-08-09-and-09-10/1.tsv
+#data/TPA/pension-deficit-data-2010-2011/1.tsv
