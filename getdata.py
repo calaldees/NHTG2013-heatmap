@@ -118,6 +118,19 @@ dict2jsonp(
 )
 
 
+def parse_pensionPayments_perHead(line):
+    point = getCenter(line[1])
+    value = tryInt(line[9])
+    return point, value
+
+dict2jsonp(
+    "pension-perhead",
+    "Pension Payments Per Head",
+    "data/TPA/Council-Spending-Pension-Payments-09-11/1.tsv",
+    parse_pensionPayments_perHead
+)
+
+
 def parse_RoadSalt_Tonnes(line):
     council, ordered_tonnes_2009 = line[0:2]
     point = getCenter(council)
@@ -274,7 +287,6 @@ dict2jsonp(
 
 #data/TPA/Council-Pension-Deficit-ALL-07-08-and-08-09/1.tsv
 #data/TPA/Council-Pension-Deficit-London-07-08-and-08-09/1.tsv
-#data/TPA/Council-Spending-Pension-Payments-09-11/1.tsv
 #data/TPA/Council-tax-over-last-10-years---England,-Wales-&-Scotland-Band-D/1.tsv
 #data/TPA/Empty-Property-Rates---final-data/1.tsv
 #data/TPA/Housing-Associations-Head-Pay-2009-11/1.tsv
