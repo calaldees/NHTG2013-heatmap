@@ -9,6 +9,15 @@
           html { height: 100% }
           body { height: 100%; margin: 0; padding: 0 }
           #map-canvas { height: 100% }
+          #controls {
+            display: inline-block;
+            height: 5em;
+            width: 100%;
+          }
+          h1 {
+            display: inline;
+            float: left;
+          }
         </style>
         
         <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=visualization&sensor=false"></script>
@@ -106,6 +115,18 @@ new google.maps.LatLng(39.9289, 116.3883)
     </head>
     
     <body>
+        <div id="controls">
+            <h1>NHTG2013</h1>
+            <div style="float:right;">
+                <form>
+                    <select onchange="console.log('changed');">
+                        <option>Bob</option>
+                        <option>Bob2</option>
+                        <option>Bob3</option>
+                    </select>
+                </form>
+            </div>
+        </div>
         <div id="map-canvas"></div>
     </body>
 </html>
