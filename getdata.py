@@ -257,6 +257,19 @@ dict2jsonp(
     parse_ctax_inc
 )
 
+def parse_empty_property_rates(line):
+    type_of, region, population, council, amount_2010, amount_2011, amount_2012, levied_2010, levied_2011, levied_2012 = line[0:10]
+    point = getCenter(council)
+    value = tryFloat(levied_2012)  #/tryFloat(population)
+    return point, value
+
+dict2jsonp(
+    "epr-2012",
+    "Empty Property Rates 2012",
+    "data/TPA/Empty-Property-Rates---final-data/1.tsv",
+    parse_empty_property_rates
+)
+
 
 
 #data/TPA/Council-Pension-Deficit-ALL-07-08-and-08-09/1.tsv
