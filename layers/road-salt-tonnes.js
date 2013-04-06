@@ -1,4 +1,4 @@
-addLayer('road-salt-tonnes', [
+addLayer("Road salt used", [
     {
         "lat": 54.9311755, 
         "lon": -1.68564821041333, 

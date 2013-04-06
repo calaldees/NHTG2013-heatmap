@@ -84,71 +84,131 @@ def generic(filepat, parse):
     return data.values()
 
 
-def dict2jsonp(name, filepat, parser):
+def dict2jsonp(name, title, filepat, parser):
     fn = "layers/%s.js" % name
     if not os.path.exists(fn):
         print "Generating", fn
         data = generic(filepat, parser)
-        file(fn, "w").write("addLayer('%s', %s);" % (name, json.dumps(data, indent=4)))
+        file(fn, "w").write("""addLayer("%s", %s);""" % (title, json.dumps(data, indent=4)))
     else:
         print "Already generated", fn
 
 # }}}
 
 
-def parseRichList(line):
+def parse_RichList(line):
     region, council, name, job, d2009, d2010 = line[0:6]
     point = getCenter(council)
     d2009 = tryInt(d2009)
     d2010 = tryInt(d2010)
     return point, ave(d2009, d2010)
 
-dict2jsonp("rich-list", "./data/TPA/Town-Hall-Rich-List-2012/1.tsv", parseRichList)
+dict2jsonp(
+    "rich-list",
+    "Average pay for council members",
+    "./data/TPA/Town-Hall-Rich-List-2012/1.tsv",
+    parse_RichList
+)
 
 
-def parseRoadSaltTonnes(line):
+def parse_RoadSalt_Tonnes(line):
     council, ordered_tonnes_2009 = line[0:2]
     point = getCenter(council)
     value = tryInt(ordered_tonnes_2009)
     return point, value
 
-dict2jsonp("road-salt-tonnes", "./data/TPA/Road-Salt-by-council-2009-11/1.tsv", parseRoadSaltTonnes)
+dict2jsonp(
+    "road-salt-tonnes",
+    "Road salt used",
+    "./data/TPA/Road-Salt-by-council-2009-11/1.tsv",
+    parse_RoadSalt_Tonnes
+)
 
 
-def parseRoadSaltCost(line):
+def parse_RoadSalt_Cost(line):
     council, t09, s09, t10, s10, when, rec, cost = line[0:8]
     point = getCenter(council)
     value = tryInt(cost)
     return point, value
 
-dict2jsonp("road-salt-emergency-cost", "./data/TPA/Road-Salt-by-council-2009-11/1.tsv", parseRoadSaltCost)
+dict2jsonp(
+    "road-salt-emergency-cost",
+    "Cost of importing emergency road salt",
+    "./data/TPA/Road-Salt-by-council-2009-11/1.tsv",
+    parse_RoadSalt_Cost
+)
 
 
-def parseAwards(line):
+def parse_Awards(line):
     region, council, name, cost = line[0:4]
     point = getCenter(council)
     value = tryInt(cost)
     return point, value
 
-dict2jsonp("awards", "./data/TPA/Award-Ceremony-Data-2010-2011/1.tsv", parseAwards)
+dict2jsonp(
+    "awards",
+    "Money spent hosting or attending awards ceremonies",
+    "./data/TPA/Award-Ceremony-Data-2010-2011/1.tsv",
+    parse_Awards
+)
 
 
-def parseMileageRate(line):
+def parse_Mileage_Rate(line):
     council, rate, _hmrc, amount = line[0:4]
     point = getCenter(council)
     value = tryInt(rate)
     return point, value
 
-dict2jsonp("mileage-rate", "data/TPA/Mileage-Allowances-FINAL-2008-11/1.tsv", parseMileageRate)
+dict2jsonp(
+    "mileage-rate",
+    "Pay per-mile for travel expenses",
+    "data/TPA/Mileage-Allowances-FINAL-2008-11/1.tsv",
+    parse_Mileage_Rate
+)
 
 
-def parseMileageAmount(line):
+def parse_Mileage_Amount(line):
     council, rate, _hmrc, amount = line[0:4]
     point = getCenter(council)
     value = tryInt(amount)
     return point, value
 
-dict2jsonp("mileage-amount", "data/TPA/Mileage-Allowances-FINAL-2008-11/1.tsv", parseMileageAmount)
+dict2jsonp(
+    "mileage-amount",
+    "Total travel spending",
+    "data/TPA/Mileage-Allowances-FINAL-2008-11/1.tsv",
+    parse_Mileage_Amount
+)
+
+
+def parse_Bins_Types(line):
+    council, reason, am1, am2, total, types = line[0:6]
+    point = getCenter(council)
+    value = tryInt(types)
+    return point, value
+
+dict2jsonp(
+    "bins-types",
+    "Number of bin types",
+    "data/TPA/Number-of-Bins-and-Fines-08-09-and-09-10/1.tsv",
+    parse_Bins_Types
+)
+
+
+def parse_Bins_Fines(line):
+    council, reason, am1, am2, total, types = line[0:6]
+    point = getCenter(council)
+    value = tryInt(total)
+    return point, value
+
+dict2jsonp(
+    "bins-fines",
+    "Bin-related fines",
+    "data/TPA/Number-of-Bins-and-Fines-08-09-and-09-10/1.tsv",
+    parse_Bins_Fines
+)
+
+
 
 #data/TPA/Council-Pension-Deficit-ALL-07-08-and-08-09/1.tsv
 #data/TPA/Council-Pension-Deficit-London-07-08-and-08-09/1.tsv
@@ -159,5 +219,4 @@ dict2jsonp("mileage-amount", "data/TPA/Mileage-Allowances-FINAL-2008-11/1.tsv", 
 #data/TPA/Local-Council-employees---number-paying-in-vs-drawing-2006-11/1.tsv
 #data/TPA/Local-Councils-Middle-Management-pay-data-12.2.13/1.tsv
 #data/TPA/Local-Govt-Exec-Pay-06-08/1.tsv
-#data/TPA/Number-of-Bins-and-Fines-08-09-and-09-10/1.tsv
 #data/TPA/pension-deficit-data-2010-2011/1.tsv

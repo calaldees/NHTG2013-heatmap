@@ -11,12 +11,14 @@
           #map-canvas { height: 100% }
           #controls {
             display: inline-block;
-            height: 5em;
             width: 100%;
+			border-bottom: 1px solid black;
           }
+		  #controls FORM {
+		  	float: right;
+		  }
           h1 {
             display: inline;
-            float: left;
           }
         </style>
         
@@ -102,21 +104,24 @@
             google.maps.event.addDomListener(window, 'load', initialize);
         </script>
         
+        <script type="text/javascript" src="layers/awards.js"></script>
+        <script type="text/javascript" src="layers/bins-fines.js"></script>
+        <script type="text/javascript" src="layers/bins-types.js"></script>
+        <script type="text/javascript" src="layers/mileage-rate.js"></script>
+        <script type="text/javascript" src="layers/mileage-amount.js"></script>
         <script type="text/javascript" src="layers/rich-list.js"></script>
-        <script type="text/javascript" src="layers/road-salt.js"></script>
-
+        <script type="text/javascript" src="layers/road-salt-emergency-cost.js"></script>
+        <script type="text/javascript" src="layers/road-salt-tonnes.js"></script>
     </head>
     
     <body>
         <div id="controls">
+			<form>
+				<select id="dataset_selector" onchange="setHeatmap(this.value)">
+					<!-- options are added dynamicly via javascript -->
+				</select>
+			</form>
             <h1>NHTG2013</h1>
-            <div style="float:right;">
-                <form>
-                    <select id="dataset_selector" onchange="setHeatmap(this.value)">
-                        <!-- options are added dynamicly via javascript -->
-                    </select>
-                </form>
-            </div>
         </div>
         <div id="map-canvas"></div>
     </body>

@@ -1,4 +1,4 @@
-addLayer('mileage-amount', [
+addLayer("Total travel spending", [
     {
         "lat": 53.2679856, 
         "lon": 0.012784794081625, 

@@ -1,4 +1,4 @@
-addLayer('road-salt-emergency-cost', [
+addLayer("Cost of importing emergency road salt", [
     {
         "lat": 54.9311755, 
         "lon": -1.68564821041333, 

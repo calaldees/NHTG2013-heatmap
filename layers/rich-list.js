@@ -1,4 +1,4 @@
-addLayer('rich-list', [
+addLayer("Average pay for council members", [
     {
         "lat": 53.228666, 
         "lon": -1.2912756, 

@@ -1,4 +1,4 @@
-addLayer('awards', [
+addLayer("Money spent hosting or attending awards ceremonies", [
     {
         "lat": 54.9311755, 
         "lon": -1.68564821041333, 

@@ -1,4 +1,4 @@
-addLayer('mileage-rate', [
+addLayer("Pay per-mile for travel expenses", [
     {
         "lat": 50.8366632, 
         "lon": -0.7787824, 
