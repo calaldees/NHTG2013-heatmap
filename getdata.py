@@ -271,6 +271,68 @@ dict2jsonp(
 )
 
 
+def parse_pension_defecit_2009_proportial(line):
+    council, assets_2008, liabilitys_2008, defecit_2008, assets_2009, liabilitys_2009, defecit_2009 = line[0:7]
+    point = getCenter(council)
+    value = -tryFloat(defecit_2009)/tryFloat(assets_2009)
+    if value < 0:
+        value = 0
+    return point, value
+
+dict2jsonp(
+    "persion-defecit-2009-proportional",
+    "Persion Defecit 2009 (proportial to assets)",
+    "data/TPA/Council-Pension-Deficit-ALL-07-08-and-08-09/1.tsv",
+    parse_pension_defecit_2009_proportial
+)
+
+def parse_pension_defecit_2009(line):
+    council, assets_2008, liabilitys_2008, defecit_2008, assets_2009, liabilitys_2009, defecit_2009 = line[0:7]
+    point = getCenter(council)
+    value = -tryInt(defecit_2009)
+    if value < 0:
+        value = 0
+    return point, value
+
+dict2jsonp(
+    "persion-defecit-2009",
+    "Persion Defecit 2009",
+    "data/TPA/Council-Pension-Deficit-ALL-07-08-and-08-09/1.tsv",
+    parse_pension_defecit_2009
+)
+
+
+def parse_pension_defecit_2008_proportial(line):
+    council, assets_2008, liabilitys_2008, defecit_2008, assets_2009, liabilitys_2009, defecit_2009 = line[0:7]
+    point = getCenter(council)
+    value = -tryFloat(defecit_2008)/tryFloat(assets_2008)
+    if value < 0:
+        value = 0
+    return point, value
+
+dict2jsonp(
+    "persion-defecit-2008-proportional",
+    "Persion Defecit 2008 (proportial to assets)",
+    "data/TPA/Council-Pension-Deficit-ALL-07-08-and-08-09/1.tsv",
+    parse_pension_defecit_2008_proportial
+)
+
+def parse_pension_defecit_2008(line):
+    council, assets_2008, liabilitys_2008, defecit_2008, assets_2009, liabilitys_2009, defecit_2009 = line[0:7]
+    point = getCenter(council)
+    value = -tryInt(defecit_2008)
+    if value < 0:
+        value = 0
+    return point, value
+
+dict2jsonp(
+    "persion-defecit-2008",
+    "Persion Defecit 2008",
+    "data/TPA/Council-Pension-Deficit-ALL-07-08-and-08-09/1.tsv",
+    parse_pension_defecit_2008
+)
+
+
 
 #data/TPA/Council-Pension-Deficit-ALL-07-08-and-08-09/1.tsv
 #data/TPA/Council-Pension-Deficit-London-07-08-and-08-09/1.tsv

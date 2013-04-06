@@ -42,9 +42,8 @@
                 // Link Map to DOM
                 map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
                 
-                google.maps.event.addListener(map, 'click', function(event) {
-                    placeMarker(event.latLng);
-                });
+                // Place marker click handler - for debugging
+                //google.maps.event.addListener(map, 'click', function(event) {placeMarker(event.latLng);});
                 
                 refreshSelector();
                 setHeatmap(document.getElementById("dataset_selector").value);
@@ -116,6 +115,11 @@
         <script type="text/javascript" src="layers/ctax-2010.js"></script>
         <script type="text/javascript" src="layers/ctax-inc.js"></script>
         <script type="text/javascript" src="layers/epr-2012.js"></script>
+        <script type="text/javascript" src="layers/persion-defecit-2009-proportional.js"></script>
+        <script type="text/javascript" src="layers/persion-defecit-2009.js"></script>
+        <script type="text/javascript" src="layers/persion-defecit-2008-proportional.js"></script>
+        <script type="text/javascript" src="layers/persion-defecit-2008.js"></script>
+
     </head>
     
     <body>
