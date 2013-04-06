@@ -53,6 +53,13 @@ def tryInt(n):
         return None
 
 
+def tryFloat(n):
+    try:
+        return float(n)
+    except Exception:
+        return None
+
+
 def ave(*n):
     l = [x for x in n if x is not None]
     if l:
@@ -206,6 +213,48 @@ dict2jsonp(
     "Bin-related fines",
     "data/TPA/Number-of-Bins-and-Fines-08-09-and-09-10/1.tsv",
     parse_Bins_Fines
+)
+
+
+def parse_ctax_2000(line):
+    council, d00, d01, d02, d03, d04, d05, d06, d07, d08, d09, d10, inc = line[0:13]
+    point = getCenter(council)
+    value = tryFloat(d00)
+    return point, value
+
+dict2jsonp(
+    "ctax-2000",
+    "Council Tax (2000)",
+    "data/TPA/Council-tax-over-last-10-years---England,-Wales-&-Scotland-Band-D/1.tsv",
+    parse_ctax_2000
+)
+
+
+def parse_ctax_2010(line):
+    council, d00, d01, d02, d03, d04, d05, d06, d07, d08, d09, d10, inc = line[0:13]
+    point = getCenter(council)
+    value = tryFloat(d10)
+    return point, value
+
+dict2jsonp(
+    "ctax-2010",
+    "Council Tax (2010)",
+    "data/TPA/Council-tax-over-last-10-years---England,-Wales-&-Scotland-Band-D/1.tsv",
+    parse_ctax_2010
+)
+
+
+def parse_ctax_inc(line):
+    council, d00, d01, d02, d03, d04, d05, d06, d07, d08, d09, d10, inc = line[0:13]
+    point = getCenter(council)
+    value = tryFloat(inc)
+    return point, value
+
+dict2jsonp(
+    "ctax-inc",
+    "Council Tax (Increase)",
+    "data/TPA/Council-tax-over-last-10-years---England,-Wales-&-Scotland-Band-D/1.tsv",
+    parse_ctax_inc
 )
 
 
