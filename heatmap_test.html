@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <title>Map</title>
+        
+        <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+        <style type="text/css">
+          html { height: 100% }
+          body { height: 100%; margin: 0; padding: 0 }
+          #map-canvas { height: 100% }
+        </style>
+        
+        <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=visualization&sensor=false"></script>
+        
+        <script type="text/javascript">
+            
+            var testData = [
+new google.maps.LatLng(51.5142, -0.0931),
+new google.maps.LatLng(51.5142, -0.0931),
+new google.maps.LatLng(51.5142, -0.0931),
+new google.maps.LatLng(50.7, -3.5333),
+new google.maps.LatLng(51.1897, -2.5472),
+new google.maps.LatLng(51.5142, -0.0931),
+new google.maps.LatLng(52.6333, 1.75),
+new google.maps.LatLng(62.0, 10.0),
+new google.maps.LatLng(52.25, 0.7167),
+new google.maps.LatLng(53.9667, -1.0833),
+new google.maps.LatLng(51.9, -1.15),
+new google.maps.LatLng(51.5142, -0.0931),
+new google.maps.LatLng(53.9667, -1.0833),
+new google.maps.LatLng(51.9, -1.15),
+new google.maps.LatLng(45.4167, -75.7),
+new google.maps.LatLng(34.0995, -118.4143),
+new google.maps.LatLng(51.5142, -0.0931),
+new google.maps.LatLng(51.5, -0.13),
+new google.maps.LatLng(51.5142, -0.0931),
+new google.maps.LatLng(50.7, -3.5333),
+new google.maps.LatLng(52.6333, 1.3),
+new google.maps.LatLng(45.4167, -75.7),
+new google.maps.LatLng(51.5, -0.13),
+new google.maps.LatLng(52.4667, -1.9167),
+new google.maps.LatLng(52.25, 0.7167),
+new google.maps.LatLng(51.5, -0.13),
+new google.maps.LatLng(52.25, -1.1667),
+new google.maps.LatLng(52.25, 0.7167),
+new google.maps.LatLng(52.25, -1.1667),
+new google.maps.LatLng(51.5, -0.13),
+new google.maps.LatLng(51.4, -0.6667),
+new google.maps.LatLng(51.4386, -2.0042),
+new google.maps.LatLng(52.6, -2.0),
+new google.maps.LatLng(45.4167, -75.7),
+new google.maps.LatLng(51.5, -0.13),
+new google.maps.LatLng(52.4667, -1.9167),
+new google.maps.LatLng(51.5, -0.13),
+new google.maps.LatLng(51.2667, 0.5167),
+new google.maps.LatLng(52.6333, 1.3),
+new google.maps.LatLng(52.4667, -1.9167),
+new google.maps.LatLng(51.5142, -0.0931),
+new google.maps.LatLng(51.5142, -0.0931),
+new google.maps.LatLng(51.5, -0.13),
+new google.maps.LatLng(51.5142, -0.0931),
+new google.maps.LatLng(53.3667, -1.5),
+new google.maps.LatLng(34.0995, -118.4143),
+new google.maps.LatLng(39.9289, 116.3883)
+
+            ];
+            var locationNesta = new google.maps.LatLng(51.51690840261987, -0.10921955108642578);
+            
+            var map;
+            function initialize() {
+                // Setup Map base options
+                var mapOptions = {
+                    center: locationNesta,
+                    zoom: 7,
+                    mapTypeId: google.maps.MapTypeId.ROADMAP
+                };
+                // Link Map to DOM
+                map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
+                
+                //google.maps.event.addListener(map, 'click', function(event) {
+                //    placeMarker(event.latLng);
+                //});
+                
+                // Setup Heatmap
+                heatmap_point_array = new google.maps.MVCArray(testData);
+                var heatmap = new google.maps.visualization.HeatmapLayer({
+                    data: heatmap_point_array,
+                    radius: 40
+                });
+                heatmap.setMap(map);
+            }
+          
+            function placeMarker(location) {
+                var marker = new google.maps.Marker({
+                    position: location,
+                    map: map
+                });
+                map.setCenter(location);
+                console.log(location);
+            }
+            
+            google.maps.event.addDomListener(window, 'load', initialize);
+        </script>
+
+    </head>
+    
+    <body>
+        <div id="map-canvas"></div>
+    </body>
+</html>
