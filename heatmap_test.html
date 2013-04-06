@@ -20,11 +20,12 @@
           }
         </style>
         
+        <script type="text/javascript" src="http://underscorejs.org/underscore-min.js"></script>
         <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=visualization&sensor=false"></script>
         
         <script type="text/javascript">
             
-            var testData = [
+            var testData = {"test1": [
 new google.maps.LatLng(51.5142, -0.0931),
 new google.maps.LatLng(51.5142, -0.0931),
 new google.maps.LatLng(51.5142, -0.0931),
@@ -72,8 +73,13 @@ new google.maps.LatLng(51.5142, -0.0931),
 new google.maps.LatLng(53.3667, -1.5),
 new google.maps.LatLng(34.0995, -118.4143),
 new google.maps.LatLng(39.9289, 116.3883)
-
-            ];
+],
+                "test2": [
+                    new google.maps.LatLng(53.3667, -1.5),
+                    new google.maps.LatLng(34.0995, -118.4143),
+                    new google.maps.LatLng(39.9289, 116.3883)
+                ]
+            };
             var locationNesta = new google.maps.LatLng(51.51690840261987, -0.10921955108642578);
             
             var map;
@@ -92,12 +98,20 @@ new google.maps.LatLng(39.9289, 116.3883)
                 //});
                 
                 // Setup Heatmap
-                heatmap_point_array = new google.maps.MVCArray(testData);
+                heatmap_point_array = new google.maps.MVCArray(testData['test1']);
                 var heatmap = new google.maps.visualization.HeatmapLayer({
                     data: heatmap_point_array,
                     radius: 40
                 });
                 heatmap.setMap(map);
+                
+                // Setup HTML controls
+                var dataset_selector = document.getElementById("dataset_selector");
+                _.each(testData, function(value, key, list){
+                    var option = document.createElement("option");
+                    option.text=key;
+                    dataset_selector.add(option,null);
+                });
             }
           
             function placeMarker(location) {
@@ -119,10 +133,8 @@ new google.maps.LatLng(39.9289, 116.3883)
             <h1>NHTG2013</h1>
             <div style="float:right;">
                 <form>
-                    <select onchange="console.log('changed');">
-                        <option>Bob</option>
-                        <option>Bob2</option>
-                        <option>Bob3</option>
+                    <select id="dataset_selector" onchange="console.log('changed');">
+                        <!-- options are added dynamicly via javascript -->
                     </select>
                 </form>
             </div>
