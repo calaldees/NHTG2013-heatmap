@@ -83,6 +83,7 @@ new google.maps.LatLng(39.9289, 116.3883)
             var locationNesta = new google.maps.LatLng(51.51690840261987, -0.10921955108642578);
             
             var map;
+            var overlays = [];
             function initialize() {
                 // Setup Map base options
                 var mapOptions = {
@@ -97,23 +98,35 @@ new google.maps.LatLng(39.9289, 116.3883)
                 //    placeMarker(event.latLng);
                 //});
                 
-                // Setup Heatmap
-                heatmap_point_array = new google.maps.MVCArray(testData['test1']);
-                var heatmap = new google.maps.visualization.HeatmapLayer({
-                    data: heatmap_point_array,
-                    radius: 40
-                });
-                heatmap.setMap(map);
+                // Setup initial Heatmap
+                setHeatmap('test1');
                 
                 // Setup HTML controls
                 var dataset_selector = document.getElementById("dataset_selector");
                 _.each(testData, function(value, key, list){
                     var option = document.createElement("option");
-                    option.text=key;
+                    option.text = key;
+                    option.value = key;
                     dataset_selector.add(option,null);
                 });
             }
-          
+            
+            function setHeatmap(dataset_name) {
+                clearOverlays();
+                var heatmap = new google.maps.visualization.HeatmapLayer({
+                    data: new google.maps.MVCArray(testData[dataset_name]),
+                    radius: 40
+                });
+                heatmap.setMap(map);
+                overlays.push(heatmap);
+            }
+            
+            function clearOverlays() {
+                while(overlays[0]) {
+                    overlays.pop().setMap(null);
+                }
+            }
+            
             function placeMarker(location) {
                 var marker = new google.maps.Marker({
                     position: location,
@@ -133,7 +146,7 @@ new google.maps.LatLng(39.9289, 116.3883)
             <h1>NHTG2013</h1>
             <div style="float:right;">
                 <form>
-                    <select id="dataset_selector" onchange="console.log('changed');">
+                    <select id="dataset_selector" onchange="setHeatmap(this.value)">
                         <!-- options are added dynamicly via javascript -->
                     </select>
                 </form>
